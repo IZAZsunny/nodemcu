@@ -1,0 +1,31 @@
+how to rest variable inside the arduino ide to store the updated value of the Flow meter..
+This is my code But they have add the updated value to the previos value...
+variable int totalMilliLitres_2 
+
+
+
+    detachInterrupt(buttonPin2);
+
+        
+        flowRate_2 = ((1000.0 / (millis() - oldTime_2)) * pulseCount_2) / calibrationFactor;
+        oldTime_2 = millis();
+        flowMilliLitres_2 = (flowRate_2 / 60) * 1000;
+        totalMilliLitres_2 += flowMilliLitres_2;
+        unsigned int frac2;
+        Serial.print("Flow rate_2: ");
+        Serial.print(int(flowRate_2)); 
+        Serial.print("."); 
+        frac2 = (flowRate_2 - int(flowRate_2)) * 10;
+        Serial.print(frac2, DEC); 
+        Serial.print("L/min");
+        Serial.print("  Current Liquid Flowing_2: ");
+        Serial.print(flowMilliLitres_2);
+        Serial.print("mL/Sec");
+        Serial.print("  Output Liquid Quantity_2: "); 
+        Serial.print(totalMilliLitres_2);
+        Serial.println("mL");
+        Firebase.setInt("Auto Tap",totalMilliLitres_2);
+  pulseCount_2 = 0;
+  attachInterrupt(buttonPin2, pulseCounter2, RISING);
+    delay(500);
+  
